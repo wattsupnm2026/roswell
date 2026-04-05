@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WattsUp Solar NM | Roswell Area — Instantly Lower Your Xcel Bill</title>
+    <style>
+        :root {
+            --primary: #004b87; 
+            --secondary: #ffb81c; 
+            --success: #28a745;
+            --dark: #222222;
+            --light: #f4f7f6;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 0; color: var(--dark); background-color: var(--light); }
+        
+        header { background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        .logo { font-size: 28px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px;}
+        .logo span { color: var(--secondary); }
+        
+        .hero { background: linear-gradient(rgba(0, 75, 135, 0.85), rgba(0, 75, 135, 0.85)), url('https://images.unsplash.com/photo-1509391366360-1e97d5259d52?auto=format&fit=crop&q=80') no-repeat center center/cover; color: white; padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
+        .hero p { font-size: 18px; margin-bottom: 0; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+        .container { max-width: 1000px; margin: -30px auto 50px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; position: relative; z-index: 10; }
+        
+        .form-section { flex: 1; min-width: 300px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .form-section h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px; font-size: 24px; text-align: center;}
+        
+        .calculator-section { flex: 1; min-width: 300px; background: var(--primary); color: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;}
+        .calculator-section h2 { color: var(--secondary); margin-top: 0; text-align: center; font-size: 28px; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #444; font-size: 14px;}
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; background-color: #fcfcfc; }
+        input:focus, select:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 2px rgba(255, 184, 28, 0.3); }
+        
+        .btn { display: block; width: 100%; background: var(--secondary); color: var(--dark); padding: 16px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 20px;}
+        .btn:hover { background: #e5a619; transform: translateY(-2px); }
+
+        .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .calc-box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.2);}
+        .calc-box span { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #ccc; }
+        .calc-box strong { display: block; font-size: 24px; color: white; margin-top: 5px; }
+        .highlight-box { grid-column: span 2; background: rgba(40, 167, 69, 0.2); border-color: var(--success); }
+        .highlight-box strong { color: var(--success); font-size: 32px; }
+        .credit-banner { background: var(--secondary); color: var(--dark); padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 15px;}
+
+        footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
+        
+        @media (max-width: 768px) { .container { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">WattsUp <span>Solar NM — Roswell</span></div>
+    </header>
+
+    <div class="hero">
+        <h1>Welcome to Your Energy Independence — New Mexico Roswell Area</h1>
+        <p>No panels. No hidden fees. Just guaranteed 25% utility savings for eligible New Mexico Roswell Area residents. See your savings instantly below.</p>
+    </div>
+
+    <div class="container">
+        <div class="form-section">
+            <h2>Secure Your 25% Savings</h2>
+            <form id="wattsup-funnel">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="billName">Name Exactly As It Appears on Xcel Bill</label>
+                    <input type="text" id="billName" required placeholder="J DOE">
+                </div>
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="john@example.com">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" required placeholder="(555) 555-5555">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Street Address</label>
+                    <input type="text" id="address" required placeholder="123 Main St, Apt 4B">
+                </div>
+                
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="state">State</label>
+                        <select id="state" required>
+                            <option value="">Select State...</option>
+                            <option value="NM">New Mexico</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="region">Region</label>
+                        <select id="region" required disabled>
+                            <option value="">Select Region...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">Zip Code</label>
+                    <select id="zipCode" required disabled>
+                        <option value="">Select Zip Code...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastBill">Last Xcel Electric Bill Amount ($)</label>
+                    <input type="number" id="lastBill" required placeholder="e.g. 120" min="1">
+                </div>
+
+                <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
+            </form>
+        </div>
+
+        <div class="calculator-section">
+            <h2>Your Projected Savings</h2>
+            <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at the state-approved 25% discount rate.</p>
+            
+            <div class="calc-grid">
+                <div class="calc-box">
+                    <span>Monthly Savings</span>
+                    <strong id="calc-mo">$0.00</strong>
+                </div>
+                <div class="calc-box">
+                    <span>Quarterly Savings</span>
+                    <strong id="calc-qtr">$0.00</strong>
+                </div>
+                <div class="calc-box">
+                    <span>1-Year Savings</span>
+                    <strong id="calc-1yr">$0.00</strong>
+                </div>
+                <div class="calc-box">
+                    <span>3-Year Savings</span>
+                    <strong id="calc-3yr">$0.00</strong>
+                </div>
+                <div class="calc-box highlight-box">
+                    <span>5-Year Total Value</span>
+                    <strong id="calc-5yr">$0.00</strong>
+                </div>
+                <div class="calc-box highlight-box" style="background: rgba(255, 184, 28, 0.2); border-color: var(--secondary);">
+                    <span style="color: white;">7-Year Total Value</span>
+                    <strong id="calc-7yr" style="color: var(--secondary);">$0.00</strong>
+                </div>
+            </div>
+            <div class="credit-banner">
+                + Eligible for $150 Bill Payoff Credit per Referral!
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 WattsUp Solar NM — Roswell Area. All rights reserved. | An independent enrollment partner.</p>
+    </footer>
+
+    <script>
+        const locationData = {
+            "Roswell (Chaves County)": ["88201", "88202", "88203"]
+        };
+
+        const stateSelect = document.getElementById('state');
+        const regionSelect = document.getElementById('region');
+        const zipSelect = document.getElementById('zipCode');
+
+        stateSelect.addEventListener('change', function() {
+            regionSelect.innerHTML = '<option value="">Select Region...</option>';
+            zipSelect.innerHTML = '<option value="">Select Zip Code...</option>';
+            zipSelect.disabled = true;
+
+            if(this.value === "NM") {
+                regionSelect.disabled = false;
+                for(let region in locationData) {
+                    let option = document.createElement('option');
+                    option.value = region;
+                    option.textContent = region;
+                    regionSelect.appendChild(option);
+                }
+            } else {
+                regionSelect.disabled = true;
+            }
+        });
+
+        regionSelect.addEventListener('change', function() {
+            zipSelect.innerHTML = '<option value="">Select Zip Code...</option>';
+            if(this.value) {
+                zipSelect.disabled = false;
+                let zips = locationData[this.value];
+                zips.forEach(function(zip) {
+                    let option = document.createElement('option');
+                    option.value = zip;
+                    option.textContent = zip;
+                    zipSelect.appendChild(option);
+                });
+            } else {
+                zipSelect.disabled = true;
+            }
+        });
+
+        const billInput = document.getElementById('lastBill');
+        const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+        billInput.addEventListener('input', function() {
+            let billAmount = parseFloat(this.value) || 0;
+            let monthlySavings = billAmount * 0.25;
+            
+            document.getElementById('calc-mo').textContent = formatter.format(monthlySavings);
+            document.getElementById('calc-qtr').textContent = formatter.format(monthlySavings * 3);
+            document.getElementById('calc-1yr').textContent = formatter.format(monthlySavings * 12);
+            document.getElementById('calc-3yr').textContent = formatter.format(monthlySavings * 36);
+            document.getElementById('calc-5yr').textContent = formatter.format(monthlySavings * 60);
+            document.getElementById('calc-7yr').textContent = formatter.format(monthlySavings * 84);
+        });
+
+        document.getElementById('wattsup-funnel').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Application submitted successfully. Your guaranteed savings are locked in!");
+        });
+    </script>
+</body>
+</html>
