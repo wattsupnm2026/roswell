@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WattsUp Solar NM | Roswell Area — Up to 30% Off Your Electric Bill</title>
+    <title>WattsUp NM | Roswell Area — Up to 30% Off Your Electric Bill</title>
     <style>
         :root {
             --primary: #004b87;
@@ -11,17 +11,18 @@
             --success: #28a745;
             --dark: #222222;
             --light: #f4f7f6;
+            --brand: #8B1A1A;
         }
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; color: var(--dark); background-color: var(--light); }
 
-        header { background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
-        .logo { font-size: 28px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px;}
-        .logo span { color: var(--secondary); }
+        header { background: white; padding: 15px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        header img { max-height: 80px; width: auto; }
 
         .hero { background: linear-gradient(rgba(0, 75, 135, 0.85), rgba(0, 75, 135, 0.85)), url('https://images.unsplash.com/photo-1509391366360-1e97d5259d52?auto=format&fit=crop&q=80') no-repeat center center/cover; color: white; padding: 60px 20px; text-align: center; }
         .hero h1 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
         .hero p { font-size: 18px; margin-bottom: 0; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+        .county-badge { display: inline-block; background: var(--secondary); color: var(--dark); padding: 6px 18px; border-radius: 20px; font-weight: 700; font-size: 14px; margin-top: 12px; letter-spacing: 0.5px; }
 
         .container { max-width: 1100px; margin: -30px auto 50px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; position: relative; z-index: 10; }
 
@@ -75,12 +76,13 @@
 <body>
 
     <header>
-        <div class="logo">WattsUp <span>Solar NM — Roswell</span></div>
+        <img src="logo.svg" alt="WattsUp New Mexico">
     </header>
 
     <div class="hero">
         <h1>Sign Up with WattsUp for a $275 Bill Credit</h1>
         <p>And up to <strong>30% off</strong> your electric bill every month. No panels. No hidden fees. See your savings instantly below.</p>
+        <div class="county-badge">Chaves County</div>
     </div>
 
     <div class="container">
@@ -115,21 +117,18 @@
                         <label for="state">State</label>
                         <select id="state" required>
                             <option value="">Select State...</option>
-                            <option value="NM">New Mexico</option>
+                            <option value="NM" selected>New Mexico</option>
                         </select>
                     </div>
                     <div style="flex: 1;">
-                        <label for="region">Region</label>
-                        <select id="region" required disabled>
-                            <option value="">Select Region...</option>
+                        <label for="zipCode">Zip Code</label>
+                        <select id="zipCode" required>
+                            <option value="">Select Zip Code...</option>
+                            <option value="88201">88201</option>
+                            <option value="88202">88202</option>
+                            <option value="88203">88203</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="zipCode">Zip Code</label>
-                    <select id="zipCode" required disabled>
-                        <option value="">Select Zip Code...</option>
-                    </select>
                 </div>
 
                 <div class="form-group" style="display: flex; gap: 10px;">
@@ -263,51 +262,10 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 WattsUp Solar NM — Roswell Area. All rights reserved. | An independent enrollment partner.</p>
+        <p>&copy; 2026 WattsUp NM — Roswell Area. All rights reserved. | An independent enrollment partner.</p>
     </footer>
 
     <script>
-        const locationData = {
-            "Roswell (Chaves County)": ["88201", "88202", "88203"]
-        };
-
-        const stateSelect = document.getElementById('state');
-        const regionSelect = document.getElementById('region');
-        const zipSelect = document.getElementById('zipCode');
-
-        stateSelect.addEventListener('change', function() {
-            regionSelect.innerHTML = '<option value="">Select Region...</option>';
-            zipSelect.innerHTML = '<option value="">Select Zip Code...</option>';
-            zipSelect.disabled = true;
-
-            if(this.value === "NM") {
-                regionSelect.disabled = false;
-                for(let region in locationData) {
-                    let option = document.createElement('option');
-                    option.value = region;
-                    option.textContent = region;
-                    regionSelect.appendChild(option);
-                }
-            } else {
-                regionSelect.disabled = true;
-            }
-        });
-
-        regionSelect.addEventListener('change', function() {
-            zipSelect.innerHTML = '<option value="">Select Zip Code...</option>';
-            if(this.value) {
-                zipSelect.disabled = false;
-                locationData[this.value].forEach(function(zip) {
-                    let option = document.createElement('option');
-                    option.value = zip;
-                    option.textContent = zip;
-                    zipSelect.appendChild(option);
-                });
-            } else {
-                zipSelect.disabled = true;
-            }
-        });
-
         const billInput = document.getElementById('lastBill');
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
