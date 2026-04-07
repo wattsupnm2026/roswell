@@ -22,39 +22,42 @@
         .hero { background: linear-gradient(rgba(0, 75, 135, 0.85), rgba(0, 75, 135, 0.85)), url('https://images.unsplash.com/photo-1509391366360-1e97d5259d52?auto=format&fit=crop&q=80') no-repeat center center/cover; color: white; padding: 60px 20px; text-align: center; }
         .hero h1 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
         .hero p { font-size: 18px; margin-bottom: 0; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
-        .county-badge { display: inline-block; background: var(--secondary); color: var(--dark); padding: 6px 18px; border-radius: 20px; font-weight: 700; font-size: 14px; margin-top: 12px; letter-spacing: 0.5px; }
+        .county-badge { display: inline-block; background: var(--secondary); color: var(--dark); padding: 6px 18px; border-radius: 20px; font-weight: 700; font-size: 14px; margin-top: 12px; letter-spacing: 1px; }
 
-        .container { max-width: 1100px; margin: -30px auto 50px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; position: relative; z-index: 10; }
+        /* Top row: Savings (left) + Eligibility (right) */
+        .top-row { max-width: 1100px; margin: -30px auto 30px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; position: relative; z-index: 10; }
 
-        .form-section { flex: 1; min-width: 300px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-        .form-section h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px; font-size: 24px; text-align: center;}
-
-        .calculator-section { flex: 1; min-width: 300px; background: var(--primary); color: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;}
+        .calculator-section { flex: 1; min-width: 300px; background: var(--primary); color: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center; }
         .calculator-section h2 { color: var(--secondary); margin-top: 0; text-align: center; font-size: 28px; }
 
+        .eligibility-side { flex: 1; min-width: 300px; background: white; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 40px; }
+        .eligibility-side h2 { color: var(--primary); text-align: center; margin-top: 0; font-size: 28px; }
+        .eligibility-side p { text-align: center; color: #555; font-size: 16px; line-height: 1.6; }
+
+        /* Form section below */
+        .form-wrapper { max-width: 700px; margin: 0 auto 50px auto; padding: 0 20px; }
+        .form-section { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .form-section h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px; font-size: 24px; text-align: center; }
+
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; color: #444; font-size: 14px;}
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #444; font-size: 14px; }
         input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; background-color: #fcfcfc; }
         input:focus, select:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 2px rgba(255, 184, 28, 0.3); }
 
-        .btn { display: block; width: 100%; background: var(--secondary); color: var(--dark); padding: 16px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 20px;}
+        .btn { display: block; width: 100%; background: var(--secondary); color: var(--dark); padding: 16px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 20px; }
         .btn:hover { background: #e5a619; transform: translateY(-2px); }
 
         .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .calc-box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.2);}
+        .calc-box { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
         .calc-box span { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #ccc; }
         .calc-box strong { display: block; font-size: 24px; color: white; margin-top: 5px; }
         .highlight-box { grid-column: span 2; background: rgba(40, 167, 69, 0.2); border-color: var(--success); }
         .highlight-box strong { color: var(--success); font-size: 32px; }
-        .credit-banner { background: var(--secondary); color: var(--dark); padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 15px;}
+        .credit-banner { background: var(--secondary); color: var(--dark); padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 15px; }
 
-        /* Eligibility Section */
-        .eligibility-section { max-width: 1100px; margin: 0 auto 50px auto; padding: 0 20px; }
-        .eligibility-card { background: white; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); padding: 40px; }
-        .eligibility-card h2 { color: var(--primary); text-align: center; margin-top: 0; font-size: 28px; }
-        .eligibility-card p { text-align: center; color: #555; font-size: 16px; line-height: 1.6; }
         .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 25px 0; }
-        .program-badge { background: linear-gradient(135deg, var(--primary), #0066b2); color: white; padding: 18px 15px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 16px; box-shadow: 0 4px 12px rgba(0,75,135,0.3); }
+        .program-badge { background: linear-gradient(135deg, var(--primary), #0066b2); color: white; padding: 18px 15px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 16px; transition: transform 0.2s; }
+        .program-badge:hover { transform: translateY(-3px); }
         .program-badge .icon { font-size: 28px; display: block; margin-bottom: 8px; }
         .or-divider { text-align: center; font-size: 18px; font-weight: 700; color: var(--secondary); margin: 20px 0; }
 
@@ -68,9 +71,17 @@
         .income-table tr:nth-child(even) { background: #f9f9f9; }
         .income-table tr:hover { background: #fff3d6; }
 
+        /* Checkbox styling */
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
+        .checkbox-group input[type="checkbox"] { width: auto; margin-top: 3px; }
+        .checkbox-group label { margin-bottom: 0; cursor: pointer; }
+
         footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
 
-        @media (max-width: 768px) { .container { flex-direction: column; } .programs-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            .top-row { flex-direction: column; }
+            .programs-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -85,94 +96,8 @@
         <div class="county-badge">Chaves County</div>
     </div>
 
-    <div class="container">
-        <div class="form-section">
-            <h2>Secure Your Savings</h2>
-            <form id="wattsup-funnel">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" required placeholder="John Doe">
-                </div>
-                <div class="form-group">
-                    <label for="billName">Name Exactly As It Appears on Xcel Bill</label>
-                    <input type="text" id="billName" required placeholder="J DOE">
-                </div>
-                <div class="form-group" style="display: flex; gap: 10px;">
-                    <div style="flex: 1;">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" required placeholder="john@example.com">
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" id="phone" required placeholder="(555) 555-5555">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="address">Street Address</label>
-                    <input type="text" id="address" required placeholder="123 Main St, Apt 4B">
-                </div>
-
-                <div class="form-group" style="display: flex; gap: 10px;">
-                    <div style="flex: 1;">
-                        <label for="state">State</label>
-                        <select id="state" required>
-                            <option value="">Select State...</option>
-                            <option value="NM" selected>New Mexico</option>
-                        </select>
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="zipCode">Zip Code</label>
-                        <select id="zipCode" required>
-                            <option value="">Select Zip Code...</option>
-                            <option value="88201">88201</option>
-                            <option value="88202">88202</option>
-                            <option value="88203">88203</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group" style="display: flex; gap: 10px;">
-                    <div style="flex: 1;">
-                        <label for="householdSize">People in Household</label>
-                        <select id="householdSize" required>
-                            <option value="">Select...</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                        </select>
-                    </div>
-                    <div style="flex: 1;">
-                        <label for="eligibleProgram">Eligible Program</label>
-                        <select id="eligibleProgram" required>
-                            <option value="">Select Program...</option>
-                            <option value="SNAP/EBT">SNAP / EBT</option>
-                            <option value="Medicaid">Medicaid</option>
-                            <option value="Section 8">Section 8</option>
-                            <option value="LIHEAP/HEAP/EAP">LIHEAP / HEAP / EAP</option>
-                            <option value="Income Qualified">Income Qualified (80% AMI)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastBill">Last Xcel Electric Bill Amount ($)</label>
-                    <input type="number" id="lastBill" required placeholder="e.g. 120" min="1">
-                </div>
-
-                <div class="form-group">
-                    <label for="authorizedSigner">Authorized Signer (Full Name)</label>
-                    <input type="text" id="authorizedSigner" required placeholder="Authorized signer name">
-                </div>
-
-                <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
-            </form>
-        </div>
-
+    <!-- TOP ROW: Projected Savings (left) + Who's Eligible (right) -->
+    <div class="top-row">
         <div class="calculator-section">
             <h2>Your Projected Savings</h2>
             <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at up to 30% discount rate.</p>
@@ -208,14 +133,11 @@
                 </div>
             </div>
             <div class="credit-banner">
-                🎉 Sign Up Now &amp; Refer 3 Friends — Receive $275 Bill Credit!
+                🎉 Refer 3 Friends and Receive $275 Toward Your Xcel Bill!
             </div>
         </div>
-    </div>
 
-    <!-- Eligibility Section -->
-    <div class="eligibility-section">
-        <div class="eligibility-card">
+        <div class="eligibility-side">
             <h2>Who's Eligible?</h2>
             <p>Everyone who has <strong>at least one</strong> of the following active assistance programs:</p>
             <div class="programs-grid">
@@ -258,6 +180,63 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+
+    <!-- FORM SECTION: Below the top row -->
+    <div class="form-wrapper">
+        <div class="form-section">
+            <h2>Secure Your Savings</h2>
+            <form id="wattsup-funnel">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required placeholder="John Doe">
+                </div>
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="john@example.com">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" required placeholder="(555) 555-5555">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eligibleProgram">Eligible Program</label>
+                    <select id="eligibleProgram" required>
+                        <option value="">Select Program...</option>
+                        <option value="SNAP/EBT">SNAP / EBT</option>
+                        <option value="Medicaid">Medicaid</option>
+                        <option value="Section 8">Section 8</option>
+                        <option value="LIHEAP/HEAP/EAP">LIHEAP / HEAP / EAP</option>
+                        <option value="Income Qualified">Income Qualified (80% AMI)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastBill">Last Xcel Electric Bill Amount ($)</label>
+                    <input type="number" id="lastBill" required placeholder="e.g. 150" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="billUpload">Upload the Bill or a Photo of Your Bill</label>
+                    <input type="file" id="billUpload" accept="image/*,.pdf" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nameOnBill">Name on Bill</label>
+                    <input type="text" id="nameOnBill" required placeholder="Name as it appears on bill">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="authorizedUser" required>
+                    <label for="authorizedUser">I am the authorized user on the account.</label>
+                </div>
+
+                <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
+            </form>
         </div>
     </div>
 
