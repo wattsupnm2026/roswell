@@ -100,7 +100,7 @@
     <div class="top-row">
         <div class="calculator-section">
             <h2>Your Projected Savings</h2>
-            <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at up to 30% discount rate.</p>
+            <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at up to 30% discount rate + $275 bill credit.</p>
 
             <div class="calc-grid">
                 <div class="calc-box">
@@ -247,18 +247,19 @@
     <script>
         const billInput = document.getElementById('lastBill');
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+        const billCredit = 275;
 
         function updateSavings() {
             let billAmount = parseFloat(billInput.value) || 0;
             let monthlySavings = billAmount * 0.30;
 
-            document.getElementById('calc-mo').textContent = formatter.format(monthlySavings);
-            document.getElementById('calc-qtr').textContent = formatter.format(monthlySavings * 3);
-            document.getElementById('calc-1yr').textContent = formatter.format(monthlySavings * 12);
-            document.getElementById('calc-3yr').textContent = formatter.format(monthlySavings * 36);
-            document.getElementById('calc-5yr').textContent = formatter.format(monthlySavings * 60);
-            document.getElementById('calc-7yr').textContent = formatter.format(monthlySavings * 84);
-            document.getElementById('calc-10yr').textContent = formatter.format(monthlySavings * 120);
+            document.getElementById('calc-mo').textContent = formatter.format(monthlySavings + billCredit);
+            document.getElementById('calc-qtr').textContent = formatter.format((monthlySavings * 3) + billCredit);
+            document.getElementById('calc-1yr').textContent = formatter.format((monthlySavings * 12) + billCredit);
+            document.getElementById('calc-3yr').textContent = formatter.format((monthlySavings * 36) + billCredit);
+            document.getElementById('calc-5yr').textContent = formatter.format((monthlySavings * 60) + billCredit);
+            document.getElementById('calc-7yr').textContent = formatter.format((monthlySavings * 84) + billCredit);
+            document.getElementById('calc-10yr').textContent = formatter.format((monthlySavings * 120) + billCredit);
         }
 
         // Calculate on page load with default $150 value
