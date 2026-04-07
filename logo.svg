@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <defs>
+    <style>
+      .watts { fill: white; font-family: 'Arial Black', 'Impact', sans-serif; font-weight: 900; font-size: 72px; letter-spacing: -2px; }
+      .up { fill: #8B1A1A; font-family: 'Arial Black', 'Impact', sans-serif; font-weight: 900; font-size: 72px; letter-spacing: -2px; }
+      .nm { fill: #8B1A1A; font-family: 'Arial Black', 'Impact', sans-serif; font-weight: 900; font-size: 32px; letter-spacing: 3px; }
+    </style>
+  </defs>
+  <rect x="18" y="48" width="215" height="72" rx="8" ry="8" fill="#8B1A1A"/>
+  <text x="22" y="110" class="watts">WATTS</text>
+  <polygon points="295,20 270,55 282,55 282,68 308,68 308,55 320,55" fill="#8B1A1A"/>
+  <text x="243" y="110" class="up">UP</text>
+  <text x="170" y="155" class="nm" text-anchor="middle">NEW MEXICO</text>
+</svg>
