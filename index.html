@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WattsUp Solar NM | Roswell Area — Instantly Lower Your Xcel Bill</title>
+    <title>WattsUp Solar NM | Roswell Area — Up to 30% Off Your Electric Bill</title>
     <style>
         :root {
-            --primary: #004b87; 
-            --secondary: #ffb81c; 
+            --primary: #004b87;
+            --secondary: #ffb81c;
             --success: #28a745;
             --dark: #222222;
             --light: #f4f7f6;
         }
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; color: var(--dark); background-color: var(--light); }
-        
+
         header { background: white; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
         .logo { font-size: 28px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px;}
         .logo span { color: var(--secondary); }
-        
+
         .hero { background: linear-gradient(rgba(0, 75, 135, 0.85), rgba(0, 75, 135, 0.85)), url('https://images.unsplash.com/photo-1509391366360-1e97d5259d52?auto=format&fit=crop&q=80') no-repeat center center/cover; color: white; padding: 60px 20px; text-align: center; }
         .hero h1 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
         .hero p { font-size: 18px; margin-bottom: 0; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
-        .container { max-width: 1000px; margin: -30px auto 50px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; position: relative; z-index: 10; }
-        
+        .container { max-width: 1100px; margin: -30px auto 50px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; position: relative; z-index: 10; }
+
         .form-section { flex: 1; min-width: 300px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
         .form-section h2 { color: var(--primary); margin-top: 0; margin-bottom: 25px; font-size: 24px; text-align: center;}
-        
+
         .calculator-section { flex: 1; min-width: 300px; background: var(--primary); color: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: center;}
         .calculator-section h2 { color: var(--secondary); margin-top: 0; text-align: center; font-size: 28px; }
-        
+
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; color: #444; font-size: 14px;}
         input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; background-color: #fcfcfc; }
         input:focus, select:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 2px rgba(255, 184, 28, 0.3); }
-        
+
         .btn { display: block; width: 100%; background: var(--secondary); color: var(--dark); padding: 16px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 20px;}
         .btn:hover { background: #e5a619; transform: translateY(-2px); }
 
@@ -47,9 +47,29 @@
         .highlight-box strong { color: var(--success); font-size: 32px; }
         .credit-banner { background: var(--secondary); color: var(--dark); padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 15px;}
 
+        /* Eligibility Section */
+        .eligibility-section { max-width: 1100px; margin: 0 auto 50px auto; padding: 0 20px; }
+        .eligibility-card { background: white; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); padding: 40px; }
+        .eligibility-card h2 { color: var(--primary); text-align: center; margin-top: 0; font-size: 28px; }
+        .eligibility-card p { text-align: center; color: #555; font-size: 16px; line-height: 1.6; }
+        .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 25px 0; }
+        .program-badge { background: linear-gradient(135deg, var(--primary), #0066b2); color: white; padding: 18px 15px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 16px; box-shadow: 0 4px 12px rgba(0,75,135,0.3); }
+        .program-badge .icon { font-size: 28px; display: block; margin-bottom: 8px; }
+        .or-divider { text-align: center; font-size: 18px; font-weight: 700; color: var(--secondary); margin: 20px 0; }
+
+        /* Income Table */
+        .income-table-wrapper { margin-top: 25px; }
+        .income-table-wrapper h3 { color: var(--primary); text-align: center; font-size: 22px; margin-bottom: 5px; }
+        .income-table-wrapper p.subtitle { text-align: center; color: #777; font-size: 14px; margin-top: 0; margin-bottom: 15px; }
+        .income-table { width: 100%; max-width: 500px; margin: 0 auto; border-collapse: collapse; }
+        .income-table th { background: var(--primary); color: white; padding: 12px; font-size: 14px; }
+        .income-table td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #eee; font-size: 15px; }
+        .income-table tr:nth-child(even) { background: #f9f9f9; }
+        .income-table tr:hover { background: #fff3d6; }
+
         footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
-        
-        @media (max-width: 768px) { .container { flex-direction: column; } }
+
+        @media (max-width: 768px) { .container { flex-direction: column; } .programs-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -59,13 +79,13 @@
     </header>
 
     <div class="hero">
-        <h1>Welcome to Your Energy Independence — New Mexico Roswell Area</h1>
-        <p>No panels. No hidden fees. Just guaranteed 25% utility savings for eligible New Mexico Roswell Area residents. See your savings instantly below.</p>
+        <h1>Sign Up with WattsUp for a $275 Bill Credit</h1>
+        <p>And up to <strong>30% off</strong> your electric bill every month. No panels. No hidden fees. See your savings instantly below.</p>
     </div>
 
     <div class="container">
         <div class="form-section">
-            <h2>Secure Your 25% Savings</h2>
+            <h2>Secure Your Savings</h2>
             <form id="wattsup-funnel">
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
@@ -89,7 +109,7 @@
                     <label for="address">Street Address</label>
                     <input type="text" id="address" required placeholder="123 Main St, Apt 4B">
                 </div>
-                
+
                 <div class="form-group" style="display: flex; gap: 10px;">
                     <div style="flex: 1;">
                         <label for="state">State</label>
@@ -112,9 +132,42 @@
                     </select>
                 </div>
 
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label for="householdSize">People in Household</label>
+                        <select id="householdSize" required>
+                            <option value="">Select...</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="eligibleProgram">Eligible Program</label>
+                        <select id="eligibleProgram" required>
+                            <option value="">Select Program...</option>
+                            <option value="SNAP/EBT">SNAP / EBT</option>
+                            <option value="Medicaid">Medicaid</option>
+                            <option value="Section 8">Section 8</option>
+                            <option value="LIHEAP/HEAP/EAP">LIHEAP / HEAP / EAP</option>
+                            <option value="Income Qualified">Income Qualified (80% AMI)</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="lastBill">Last Xcel Electric Bill Amount ($)</label>
                     <input type="number" id="lastBill" required placeholder="e.g. 120" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="authorizedSigner">Authorized Signer (Full Name)</label>
+                    <input type="text" id="authorizedSigner" required placeholder="Authorized signer name">
                 </div>
 
                 <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
@@ -123,8 +176,8 @@
 
         <div class="calculator-section">
             <h2>Your Projected Savings</h2>
-            <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at the state-approved 25% discount rate.</p>
-            
+            <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at up to 30% discount rate.</p>
+
             <div class="calc-grid">
                 <div class="calc-box">
                     <span>Monthly Savings</span>
@@ -150,9 +203,61 @@
                     <span style="color: white;">7-Year Total Value</span>
                     <strong id="calc-7yr" style="color: var(--secondary);">$0.00</strong>
                 </div>
+                <div class="calc-box highlight-box" style="background: rgba(255, 75, 75, 0.2); border-color: #ff4b4b;">
+                    <span style="color: white;">10-Year Total Value</span>
+                    <strong id="calc-10yr" style="color: #ff6b6b; font-size: 36px;">$0.00</strong>
+                </div>
             </div>
             <div class="credit-banner">
-                + Eligible for $150 Bill Payoff Credit per Referral!
+                🎉 Sign Up Now &amp; Refer 3 Friends — Receive $275 Bill Credit!
+            </div>
+        </div>
+    </div>
+
+    <!-- Eligibility Section -->
+    <div class="eligibility-section">
+        <div class="eligibility-card">
+            <h2>Who's Eligible?</h2>
+            <p>Everyone who has <strong>at least one</strong> of the following active assistance programs:</p>
+            <div class="programs-grid">
+                <div class="program-badge">
+                    <span class="icon">🛒</span>
+                    SNAP / EBT
+                </div>
+                <div class="program-badge">
+                    <span class="icon">🏥</span>
+                    Medicaid
+                </div>
+                <div class="program-badge">
+                    <span class="icon">🏠</span>
+                    Section 8
+                </div>
+                <div class="program-badge">
+                    <span class="icon">⚡</span>
+                    LIHEAP / HEAP / EAP
+                </div>
+            </div>
+            <div class="or-divider">— OR —</div>
+            <p>Everyone who is <strong>income qualified</strong> at or below <strong>80% of Area Median Income</strong>.</p>
+
+            <div class="income-table-wrapper">
+                <h3>Chaves County — 2025 HUD 80% AMI Limits</h3>
+                <p class="subtitle">Roswell Area Income Eligibility</p>
+                <table class="income-table">
+                    <thead>
+                        <tr><th>People in Household</th><th>Income Limit</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>$38,550</td></tr>
+                        <tr><td>2</td><td>$44,050</td></tr>
+                        <tr><td>3</td><td>$49,550</td></tr>
+                        <tr><td>4</td><td>$55,050</td></tr>
+                        <tr><td>5</td><td>$59,500</td></tr>
+                        <tr><td>6</td><td>$63,900</td></tr>
+                        <tr><td>7</td><td>$68,300</td></tr>
+                        <tr><td>8</td><td>$72,700</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -208,14 +313,15 @@
 
         billInput.addEventListener('input', function() {
             let billAmount = parseFloat(this.value) || 0;
-            let monthlySavings = billAmount * 0.25;
-            
+            let monthlySavings = billAmount * 0.30;
+
             document.getElementById('calc-mo').textContent = formatter.format(monthlySavings);
             document.getElementById('calc-qtr').textContent = formatter.format(monthlySavings * 3);
             document.getElementById('calc-1yr').textContent = formatter.format(monthlySavings * 12);
             document.getElementById('calc-3yr').textContent = formatter.format(monthlySavings * 36);
             document.getElementById('calc-5yr').textContent = formatter.format(monthlySavings * 60);
             document.getElementById('calc-7yr').textContent = formatter.format(monthlySavings * 84);
+            document.getElementById('calc-10yr').textContent = formatter.format(monthlySavings * 120);
         });
 
         document.getElementById('wattsup-funnel').addEventListener('submit', function(e) {
