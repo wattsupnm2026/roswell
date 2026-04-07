@@ -217,7 +217,7 @@
 
                 <div class="form-group">
                     <label for="lastBill">Last Xcel Electric Bill Amount ($)</label>
-                    <input type="number" id="lastBill" required placeholder="e.g. 150" min="1">
+                    <input type="number" id="lastBill" required value="150" min="1">
                 </div>
 
                 <div class="form-group">
@@ -248,8 +248,8 @@
         const billInput = document.getElementById('lastBill');
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
-        billInput.addEventListener('input', function() {
-            let billAmount = parseFloat(this.value) || 0;
+        function updateSavings() {
+            let billAmount = parseFloat(billInput.value) || 0;
             let monthlySavings = billAmount * 0.30;
 
             document.getElementById('calc-mo').textContent = formatter.format(monthlySavings);
@@ -259,7 +259,13 @@
             document.getElementById('calc-5yr').textContent = formatter.format(monthlySavings * 60);
             document.getElementById('calc-7yr').textContent = formatter.format(monthlySavings * 84);
             document.getElementById('calc-10yr').textContent = formatter.format(monthlySavings * 120);
-        });
+        }
+
+        // Calculate on page load with default $150 value
+        updateSavings();
+
+        // Recalculate when user changes the bill amount
+        billInput.addEventListener('input', updateSavings);
 
         document.getElementById('wattsup-funnel').addEventListener('submit', function(e) {
             e.preventDefault();
