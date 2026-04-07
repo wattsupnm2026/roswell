@@ -83,6 +83,10 @@
         .checkbox-group input[type="checkbox"] { width: auto; margin-top: 3px; }
         .checkbox-group label { margin-bottom: 0; cursor: pointer; }
 
+        /* Inline error messages */
+        .error-msg { display: block; color: #dc3545; font-size: 13px; margin-top: 4px; }
+        input.input-error, select.input-error { border-color: #dc3545; }
+
         footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
 
         @media (max-width: 768px) {
@@ -204,15 +208,18 @@
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
                     <input type="text" id="fullName" required placeholder="John Doe">
+                    <span class="error-msg" id="fullName-error"></span>
                 </div>
                 <div class="form-group" style="display: flex; gap: 10px;">
                     <div style="flex: 1;">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" required placeholder="john@example.com">
+                        <span class="error-msg" id="email-error"></span>
                     </div>
                     <div style="flex: 1;">
                         <label for="phone">Phone Number</label>
-                        <input type="text" id="phone" required placeholder="(555) 555-5555">
+                        <input type="text" id="phone" required placeholder="(505) 123-4567" maxlength="14">
+                        <span class="error-msg" id="phone-error"></span>
                     </div>
                 </div>
 
@@ -226,22 +233,26 @@
                         <option value="LIHEAP/HEAP/EAP">LIHEAP / HEAP / EAP</option>
                         <option value="Income Qualified">Income Qualified (80% AMI)</option>
                     </select>
+                    <span class="error-msg" id="eligibleProgram-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="billUpload">Upload the Bill or a Photo of Your Bill</label>
                     <input type="file" id="billUpload" accept="image/*,.pdf" required>
+                    <span class="error-msg" id="billUpload-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="nameOnBill">Name on Bill</label>
                     <input type="text" id="nameOnBill" required placeholder="Name as it appears on bill">
+                    <span class="error-msg" id="nameOnBill-error"></span>
                 </div>
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="authorizedUser" required>
+                <div class="checkbox-group" id="authorizedUserGroup" style="display: none;">
+                    <input type="checkbox" id="authorizedUser">
                     <label for="authorizedUser">I am the account holder or I am authorized by the account holder.</label>
                 </div>
+                <span class="error-msg" id="authorizedUser-error"></span>
 
                 <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
             </form>
@@ -253,6 +264,7 @@
     </footer>
 
     <script>
+        // ─── Savings Calculator ────────────────────────────────────────────────
         const billInput = document.getElementById('lastBill');
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
         const billCredit = 275;
@@ -270,15 +282,167 @@
             document.getElementById('calc-10yr').textContent = formatter.format((monthlySavings * 120) + billCredit);
         }
 
-        // Calculate on page load with default $150 value
         updateSavings();
-
-        // Recalculate when user changes the bill amount
         billInput.addEventListener('input', updateSavings);
 
-        document.getElementById('wattsup-funnel').addEventListener('submit', function(e) {
+        // ─── Google Apps Script endpoint (placeholder) ─────────────────────────
+        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+        // ─── Phone Auto-Format ─────────────────────────────────────────────────
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function () {
+            let digits = this.value.replace(/\D/g, '').slice(0, 10);
+            let formatted = '';
+            if (digits.length > 0) formatted = '(' + digits.slice(0, 3);
+            if (digits.length >= 4) formatted += ') ' + digits.slice(3, 6);
+            if (digits.length >= 7) formatted += '-' + digits.slice(6, 10);
+            this.value = formatted;
+            clearError('phone');
+        });
+
+        // ─── Helper: show/clear inline errors ─────────────────────────────────
+        function showError(fieldId, message) {
+            const errEl = document.getElementById(fieldId + '-error');
+            const inputEl = document.getElementById(fieldId);
+            if (errEl) errEl.textContent = message;
+            if (inputEl) inputEl.classList.add('input-error');
+        }
+
+        function clearError(fieldId) {
+            const errEl = document.getElementById(fieldId + '-error');
+            const inputEl = document.getElementById(fieldId);
+            if (errEl) errEl.textContent = '';
+            if (inputEl) inputEl.classList.remove('input-error');
+        }
+
+        // Clear errors on user interaction
+        document.getElementById('fullName').addEventListener('input', () => clearError('fullName'));
+        document.getElementById('email').addEventListener('input', () => clearError('email'));
+        document.getElementById('eligibleProgram').addEventListener('change', () => clearError('eligibleProgram'));
+        document.getElementById('billUpload').addEventListener('change', () => clearError('billUpload'));
+        document.getElementById('nameOnBill').addEventListener('input', () => clearError('nameOnBill'));
+        document.getElementById('authorizedUser').addEventListener('change', () => clearError('authorizedUser'));
+
+        // ─── Authorized User Checkbox — Smart Show/Hide ────────────────────────
+        function normalizeName(name) {
+            return name.trim().replace(/\s+/g, ' ').toLowerCase();
+        }
+
+        function updateAuthorizedVisibility() {
+            const fullName = document.getElementById('fullName').value;
+            const nameOnBill = document.getElementById('nameOnBill').value;
+            const group = document.getElementById('authorizedUserGroup');
+            const checkbox = document.getElementById('authorizedUser');
+
+            if (fullName && nameOnBill && normalizeName(fullName) !== normalizeName(nameOnBill)) {
+                group.style.display = 'flex';
+                checkbox.required = true;
+            } else {
+                group.style.display = 'none';
+                checkbox.required = false;
+                checkbox.checked = false;
+                clearError('authorizedUser');
+            }
+        }
+
+        document.getElementById('fullName').addEventListener('input', updateAuthorizedVisibility);
+        document.getElementById('nameOnBill').addEventListener('input', updateAuthorizedVisibility);
+
+        // ─── Form Validation & Submission ─────────────────────────────────────
+        document.getElementById('wattsup-funnel').addEventListener('submit', function (e) {
             e.preventDefault();
-            alert("Application submitted successfully. Your guaranteed savings are locked in!");
+            let valid = true;
+
+            // Full Name
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName) {
+                showError('fullName', 'Please enter your full name.');
+                valid = false;
+            }
+
+            // Email
+            const emailVal = document.getElementById('email').value.trim();
+            const atIdx = emailVal.indexOf('@');
+            const dotIdx = emailVal.lastIndexOf('.');
+            if (!emailVal || atIdx < 1 || dotIdx <= atIdx + 1 || emailVal.length - dotIdx < 2) {
+                showError('email', 'Please enter a valid email address.');
+                valid = false;
+            }
+
+            // Phone
+            const digits = phoneInput.value.replace(/\D/g, '');
+            const areaCode = digits.slice(0, 3);
+            const prefix = digits.slice(3, 6);
+            let phoneValid = true;
+            if (digits.length !== 10) {
+                phoneValid = false;
+            } else if (areaCode[0] === '0' || areaCode[0] === '1') {
+                phoneValid = false;
+            } else if (areaCode === '555' || prefix === '555') {
+                phoneValid = false;
+            }
+            if (!phoneValid) {
+                showError('phone', 'Please enter a valid phone number.');
+                valid = false;
+            }
+
+            // Eligible Program
+            const program = document.getElementById('eligibleProgram').value;
+            if (!program) {
+                showError('eligibleProgram', 'Please select an eligible program.');
+                valid = false;
+            }
+
+            // Bill Upload
+            const billUpload = document.getElementById('billUpload');
+            if (!billUpload.files || billUpload.files.length === 0) {
+                showError('billUpload', 'Please upload your bill or a photo of your bill.');
+                valid = false;
+            }
+
+            // Name on Bill
+            const nameOnBill = document.getElementById('nameOnBill').value.trim();
+            if (!nameOnBill) {
+                showError('nameOnBill', 'Please enter the name on your bill.');
+                valid = false;
+            }
+
+            // Authorized User checkbox (only if visible)
+            const authorizedGroup = document.getElementById('authorizedUserGroup');
+            const authorizedCheckbox = document.getElementById('authorizedUser');
+            if (authorizedGroup.style.display !== 'none' && !authorizedCheckbox.checked) {
+                showError('authorizedUser', 'You must confirm you are authorized.');
+                valid = false;
+            }
+
+            if (!valid) return;
+
+            // ── Store data & redirect ──────────────────────────────────────────
+            const billFileName = billUpload.files.length > 0 ? billUpload.files[0].name : '';
+            const isAuthorized = authorizedGroup.style.display !== 'none' ? authorizedCheckbox.checked : null;
+
+            const formData = {
+                fullName: fullName,
+                email: emailVal,
+                phone: phoneInput.value,
+                eligibleProgram: program,
+                nameOnBill: nameOnBill,
+                authorizedUser: isAuthorized,
+                billFileName: billFileName
+            };
+
+            sessionStorage.setItem('wattsupSubmission', JSON.stringify(formData));
+
+            // ── POST to Google Apps Script (non-blocking) ─────────────────────
+            if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                }).catch(function () { /* silently ignore errors */ });
+            }
+
+            window.location.href = 'final.html';
         });
     </script>
 </body>

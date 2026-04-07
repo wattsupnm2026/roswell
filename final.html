@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WattsUp NM | Thank You — Submission Confirmed</title>
+    <style>
+        :root {
+            --primary: #004b87;
+            --secondary: #ffb81c;
+            --success: #28a745;
+            --dark: #222222;
+            --light: #f4f7f6;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 0; color: var(--dark); background-color: var(--light); }
+
+        header { background: white; padding: 15px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        header img { max-height: 80px; width: auto; }
+
+        .hero { background: linear-gradient(rgba(0, 75, 135, 0.85), rgba(0, 75, 135, 0.85)), url('https://images.unsplash.com/photo-1509391366360-1e97d5259d52?auto=format&fit=crop&q=80') no-repeat center center/cover; color: white; padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
+        .hero p { font-size: 18px; max-width: 600px; margin: 0 auto; line-height: 1.5; color: #ddd; }
+
+        .content-wrapper { max-width: 750px; margin: 40px auto 50px auto; padding: 0 20px; }
+
+        .card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.12); margin-bottom: 30px; }
+        .card h2 { color: var(--primary); margin-top: 0; font-size: 22px; border-bottom: 2px solid var(--secondary); padding-bottom: 10px; margin-bottom: 20px; }
+
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table tr { border-bottom: 1px solid #eee; }
+        .data-table tr:last-child { border-bottom: none; }
+        .data-table td { padding: 12px 8px; font-size: 15px; }
+        .data-table td:first-child { font-weight: 600; color: #555; width: 42%; }
+        .data-table td:last-child { color: var(--dark); }
+
+        .whats-next-list { list-style: none; padding: 0; margin: 0; }
+        .whats-next-list li { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 15px; line-height: 1.5; }
+        .whats-next-list li:last-child { border-bottom: none; }
+        .whats-next-list .step-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+
+        .btn { display: inline-block; background: var(--secondary); color: var(--dark); padding: 14px 32px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: all 0.3s ease; margin-top: 10px; }
+        .btn:hover { background: #e5a619; transform: translateY(-2px); }
+
+        .no-data { text-align: center; padding: 40px; color: #777; font-size: 16px; }
+        .no-data a { color: var(--primary); font-weight: 600; text-decoration: none; }
+        .no-data a:hover { text-decoration: underline; }
+
+        footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 28px; }
+            .card { padding: 25px 20px; }
+            .data-table td:first-child { width: 48%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.svg" alt="WattsUp New Mexico">
+    </header>
+
+    <div class="hero">
+        <h1>Thank You for Signing Up!</h1>
+        <p>Here's a summary of what was submitted.</p>
+    </div>
+
+    <div class="content-wrapper" id="mainContent">
+        <!-- Populated by JS -->
+    </div>
+
+    <footer>
+        <p>&copy; 2026 WattsUp NM — Roswell Area. All rights reserved. | An independent enrollment partner.</p>
+    </footer>
+
+    <script>
+        const raw = sessionStorage.getItem('wattsupSubmission');
+        const container = document.getElementById('mainContent');
+
+        if (!raw) {
+            container.innerHTML = `
+                <div class="card no-data">
+                    <p>No submission found. Please go back and fill out the form.</p>
+                    <a href="index.html">← Back to Home</a>
+                </div>`;
+        } else {
+            const d = JSON.parse(raw);
+
+            const authorizedRow = d.authorizedUser !== null
+                ? `<tr><td>Authorized User</td><td>${d.authorizedUser ? 'Yes' : 'No'}</td></tr>`
+                : '';
+
+            container.innerHTML = `
+                <div class="card">
+                    <h2>📋 Submission Summary</h2>
+                    <table class="data-table">
+                        <tr><td>Full Name</td><td>${escHtml(d.fullName)}</td></tr>
+                        <tr><td>Email Address</td><td>${escHtml(d.email)}</td></tr>
+                        <tr><td>Phone Number</td><td>${escHtml(d.phone)}</td></tr>
+                        <tr><td>Eligible Program</td><td>${escHtml(d.eligibleProgram)}</td></tr>
+                        <tr><td>Name on Bill</td><td>${escHtml(d.nameOnBill)}</td></tr>
+                        ${authorizedRow}
+                        <tr><td>Bill Uploaded</td><td>${escHtml(d.billFileName || '—')}</td></tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h2>🚀 What's Next?</h2>
+                    <ul class="whats-next-list">
+                        <li>
+                            <span class="step-icon">🔍</span>
+                            <span>We'll review your bill and verify your eligibility.</span>
+                        </li>
+                        <li>
+                            <span class="step-icon">📧</span>
+                            <span>You'll receive a confirmation email within 24–48 hours.</span>
+                        </li>
+                        <li>
+                            <span class="step-icon">💡</span>
+                            <span>If approved, your savings begin on your next billing cycle!</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="index.html" class="btn">← Back to Home</a>
+                </div>`;
+        }
+
+        function escHtml(str) {
+            if (str === undefined || str === null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+    </script>
+</body>
+</html>
