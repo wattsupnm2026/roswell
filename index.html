@@ -34,6 +34,13 @@
         .eligibility-side h2 { color: var(--primary); text-align: center; margin-top: 0; font-size: 28px; }
         .eligibility-side p { text-align: center; color: #555; font-size: 16px; line-height: 1.6; }
 
+        /* Bill amount inside calculator */
+        .bill-amount-section { margin-top: 20px; }
+        .bill-amount-label { display: block; font-weight: 600; color: var(--secondary); font-size: 15px; margin-bottom: 6px; text-align: center; }
+        .bill-amount-sublabel { display: block; font-size: 13px; color: #ccc; text-align: center; margin-bottom: 10px; }
+        .bill-amount-input { width: 100%; padding: 12px; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 18px; font-weight: 700; background: rgba(255,255,255,0.1); color: white; text-align: center; }
+        .bill-amount-input:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 2px rgba(255, 184, 28, 0.3); }
+
         /* Form section below */
         .form-wrapper { max-width: 700px; margin: 0 auto 50px auto; padding: 0 20px; }
         .form-section { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
@@ -101,6 +108,12 @@
         <div class="calculator-section">
             <h2>Your Projected Savings</h2>
             <p style="text-align: center; margin-top: 0; color: #ddd;">Calculated at up to 30% discount rate + $275 bill credit.</p>
+
+            <div class="bill-amount-section">
+                <label class="bill-amount-label" for="lastBill">Last Xcel Electric Bill Amount ($)</label>
+                <span class="bill-amount-sublabel">How much is your bill? Change the number below.</span>
+                <input type="number" id="lastBill" class="bill-amount-input" value="150" min="1">
+            </div>
 
             <div class="calc-grid">
                 <div class="calc-box">
@@ -213,11 +226,6 @@
                         <option value="LIHEAP/HEAP/EAP">LIHEAP / HEAP / EAP</option>
                         <option value="Income Qualified">Income Qualified (80% AMI)</option>
                     </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastBill">Last Xcel Electric Bill Amount ($)</label>
-                    <input type="number" id="lastBill" required value="150" min="1">
                 </div>
 
                 <div class="form-group">
