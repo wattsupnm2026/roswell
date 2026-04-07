@@ -63,7 +63,7 @@
         .credit-banner { background: var(--secondary); color: var(--dark); padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 15px; }
 
         .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 25px 0; }
-        .program-badge { background: linear-gradient(135deg, var(--primary), #0066b2); color: white; padding: 18px 15px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 16px; transition: transform 0.2s; }
+        .program-badge { background: linear-gradient(135deg, var(--primary), #0066b2); color: white; padding: 18px 15px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 16px; transition: transform 0.2s; cursor: default; }
         .program-badge:hover { transform: translateY(-3px); }
         .program-badge .icon { font-size: 28px; display: block; margin-bottom: 8px; }
         .or-divider { text-align: center; font-size: 18px; font-weight: 700; color: var(--secondary); margin: 20px 0; }
@@ -82,6 +82,11 @@
         .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
         .checkbox-group input[type="checkbox"] { width: auto; margin-top: 3px; }
         .checkbox-group label { margin-bottom: 0; cursor: pointer; }
+
+        /* Validation error styling */
+        .field-error { border-color: #dc3545 !important; box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25) !important; }
+        .error-msg { color: #dc3545; font-size: 12px; margin-top: 4px; display: none; }
+        .error-msg.visible { display: block; }
 
         footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
 
@@ -200,19 +205,22 @@
     <div class="form-wrapper">
         <div class="form-section">
             <h2>Secure Your Savings</h2>
-            <form id="wattsup-funnel">
+            <form id="wattsup-funnel" novalidate>
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
                     <input type="text" id="fullName" required placeholder="John Doe">
+                    <div class="error-msg" id="fullName-error">Full name is required.</div>
                 </div>
                 <div class="form-group" style="display: flex; gap: 10px;">
                     <div style="flex: 1;">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" required placeholder="john@example.com">
+                        <div class="error-msg" id="email-error">Please enter a valid email address.</div>
                     </div>
                     <div style="flex: 1;">
                         <label for="phone">Phone Number</label>
-                        <input type="text" id="phone" required placeholder="(555) 555-5555">
+                        <input type="tel" id="phone" required placeholder="(555) 555-5555" maxlength="14">
+                        <div class="error-msg" id="phone-error">Please enter a valid 10-digit phone number.</div>
                     </div>
                 </div>
 
@@ -226,22 +234,27 @@
                         <option value="LIHEAP/HEAP/EAP">LIHEAP / HEAP / EAP</option>
                         <option value="Income Qualified">Income Qualified (80% AMI)</option>
                     </select>
+                    <div class="error-msg" id="program-error">Please select an eligible program.</div>
                 </div>
 
                 <div class="form-group">
                     <label for="billUpload">Upload the Bill or a Photo of Your Bill</label>
                     <input type="file" id="billUpload" accept="image/*,.pdf" required>
+                    <div class="error-msg" id="billUpload-error">Please upload your bill.</div>
                 </div>
 
                 <div class="form-group">
                     <label for="nameOnBill">Name on Bill</label>
                     <input type="text" id="nameOnBill" required placeholder="Name as it appears on bill">
+                    <div class="error-msg" id="nameOnBill-error">Name on bill is required.</div>
                 </div>
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="authorizedUser" required>
+                <!-- Hidden by default. Only shown when Full Name ≠ Name on Bill -->
+                <div class="checkbox-group" id="authorizedGroup" style="display: none;">
+                    <input type="checkbox" id="authorizedUser">
                     <label for="authorizedUser">I am the account holder or I am authorized by the account holder.</label>
                 </div>
+                <div class="error-msg" id="authorized-error" style="margin-top: -10px; margin-bottom: 10px;">You must confirm you are authorized on this account.</div>
 
                 <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
             </form>
@@ -253,6 +266,7 @@
     </footer>
 
     <script>
+        // ===== SAVINGS CALCULATOR =====
         const billInput = document.getElementById('lastBill');
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
         const billCredit = 275;
@@ -270,14 +284,139 @@
             document.getElementById('calc-10yr').textContent = formatter.format((monthlySavings * 120) + billCredit);
         }
 
-        // Calculate on page load with default $150 value
         updateSavings();
-
-        // Recalculate when user changes the bill amount
         billInput.addEventListener('input', updateSavings);
 
+        // ===== PHONE AUTO-FORMAT: (###) ###-#### =====
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            let digits = this.value.replace(/\D/g, '');
+            if (digits.length > 10) digits = digits.substring(0, 10);
+
+            let formatted = '';
+            if (digits.length > 0) formatted = '(' + digits.substring(0, 3);
+            if (digits.length >= 3) formatted += ') ';
+            if (digits.length > 3) formatted += digits.substring(3, 6);
+            if (digits.length >= 6) formatted += '-';
+            if (digits.length > 6) formatted += digits.substring(6, 10);
+
+            this.value = formatted;
+        });
+
+        // ===== SMART AUTHORIZED CHECKBOX: Show only when Full Name ≠ Name on Bill =====
+        const fullNameInput = document.getElementById('fullName');
+        const nameOnBillInput = document.getElementById('nameOnBill');
+        const authorizedGroup = document.getElementById('authorizedGroup');
+        const authorizedCheckbox = document.getElementById('authorizedUser');
+        const authorizedError = document.getElementById('authorized-error');
+
+        function checkNameMatch() {
+            const fullName = fullNameInput.value.trim().toLowerCase();
+            const nameOnBill = nameOnBillInput.value.trim().toLowerCase();
+
+            if (fullName && nameOnBill && fullName !== nameOnBill) {
+                // Names don't match — show and require the checkbox
+                authorizedGroup.style.display = 'flex';
+            } else {
+                // Names match or one is empty — hide and don't require
+                authorizedGroup.style.display = 'none';
+                authorizedCheckbox.checked = false;
+                authorizedError.classList.remove('visible');
+            }
+        }
+
+        fullNameInput.addEventListener('input', checkNameMatch);
+        nameOnBillInput.addEventListener('input', checkNameMatch);
+
+        // ===== CLEAR ERROR ON INTERACTION =====
+        function clearError(inputEl, errorEl) {
+            inputEl.addEventListener('input', function() {
+                this.classList.remove('field-error');
+                document.getElementById(errorEl).classList.remove('visible');
+            });
+        }
+        clearError(fullNameInput, 'fullName-error');
+        clearError(document.getElementById('email'), 'email-error');
+        clearError(phoneInput, 'phone-error');
+        clearError(nameOnBillInput, 'nameOnBill-error');
+
+        document.getElementById('eligibleProgram').addEventListener('change', function() {
+            this.classList.remove('field-error');
+            document.getElementById('program-error').classList.remove('visible');
+        });
+        document.getElementById('billUpload').addEventListener('change', function() {
+            this.classList.remove('field-error');
+            document.getElementById('billUpload-error').classList.remove('visible');
+        });
+        authorizedCheckbox.addEventListener('change', function() {
+            authorizedError.classList.remove('visible');
+        });
+
+        // ===== FORM VALIDATION & SUBMIT =====
         document.getElementById('wattsup-funnel').addEventListener('submit', function(e) {
             e.preventDefault();
+            let valid = true;
+
+            // Full Name
+            if (!fullNameInput.value.trim()) {
+                fullNameInput.classList.add('field-error');
+                document.getElementById('fullName-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Email — must be valid format
+            const emailInput = document.getElementById('email');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
+                emailInput.classList.add('field-error');
+                document.getElementById('email-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Phone — must be exactly 10 digits
+            const phoneDigits = phoneInput.value.replace(/\D/g, '');
+            if (phoneDigits.length !== 10) {
+                phoneInput.classList.add('field-error');
+                document.getElementById('phone-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Eligible Program — must not be default "Select Program..."
+            const programSelect = document.getElementById('eligibleProgram');
+            if (!programSelect.value) {
+                programSelect.classList.add('field-error');
+                document.getElementById('program-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Bill Upload
+            const billUpload = document.getElementById('billUpload');
+            if (!billUpload.files || billUpload.files.length === 0) {
+                billUpload.classList.add('field-error');
+                document.getElementById('billUpload-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Name on Bill
+            if (!nameOnBillInput.value.trim()) {
+                nameOnBillInput.classList.add('field-error');
+                document.getElementById('nameOnBill-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Authorized checkbox — only required when visible (names don't match)
+            if (authorizedGroup.style.display !== 'none' && !authorizedCheckbox.checked) {
+                authorizedError.classList.add('visible');
+                valid = false;
+            }
+
+            if (!valid) {
+                // Scroll to first error
+                const firstError = document.querySelector('.field-error, .error-msg.visible');
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
             alert("Application submitted successfully. Your guaranteed savings are locked in!");
         });
     </script>
