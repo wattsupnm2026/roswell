@@ -88,11 +88,20 @@
         .error-msg { color: #dc3545; font-size: 12px; margin-top: 4px; display: none; }
         .error-msg.visible { display: block; }
 
+        /* Referral section */
+        .referral-section { background: #f0f6ff; border: 1px solid #c5d8f0; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .referral-section h4 { color: var(--primary); margin: 0 0 15px 0; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .referral-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .referral-row .form-group { flex: 1; margin-bottom: 0; }
+
         footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
 
         @media (max-width: 768px) {
             .top-row { flex-direction: column; }
             .programs-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .referral-row { flex-direction: column; }
         }
     </style>
 </head>
@@ -237,6 +246,13 @@
                     <div class="error-msg" id="program-error">Please select an eligible program.</div>
                 </div>
 
+                <!-- Conditionally shown when a program is selected -->
+                <div class="form-group" id="proofUploadGroup" style="display: none;">
+                    <label for="proofUpload">Upload the Proof of Your Program</label>
+                    <input type="file" id="proofUpload" accept="image/*,.pdf">
+                    <div class="error-msg" id="proofUpload-error">Please upload proof of your program.</div>
+                </div>
+
                 <div class="form-group">
                     <label for="billUpload">Upload the Bill or a Photo of Your Bill</label>
                     <input type="file" id="billUpload" accept="image/*,.pdf" required>
@@ -255,6 +271,126 @@
                     <label for="authorizedUser">I am the account holder or I am authorized by the account holder.</label>
                 </div>
                 <div class="error-msg" id="authorized-error" style="margin-top: -10px; margin-bottom: 10px;">You must confirm you are authorized on this account.</div>
+
+                <!-- REFERRAL SECTION -->
+                <div class="checkbox-group" style="margin-top: 5px;">
+                    <input type="checkbox" id="referralCheck1">
+                    <label for="referralCheck1"><strong>I Know Three People I'd Like To Refer Now</strong></label>
+                </div>
+
+                <!-- First 3 referral rows (hidden until checkbox 1 is checked) -->
+                <div id="referralRows1" style="display: none;">
+                    <div class="referral-section">
+                        <h4>Referrals</h4>
+                        <!-- Row 1 -->
+                        <div class="referral-row">
+                            <div class="form-group">
+                                <label for="ref1Name">Name</label>
+                                <input type="text" id="ref1Name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref1Email">Email</label>
+                                <input type="email" id="ref1Email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref1Phone">Phone</label>
+                                <input type="tel" id="ref1Phone" placeholder="(555) 555-5555" maxlength="14">
+                            </div>
+                        </div>
+                        <!-- Row 2 -->
+                        <div class="referral-row">
+                            <div class="form-group">
+                                <label for="ref2Name">Name</label>
+                                <input type="text" id="ref2Name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref2Email">Email</label>
+                                <input type="email" id="ref2Email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref2Phone">Phone</label>
+                                <input type="tel" id="ref2Phone" placeholder="(555) 555-5555" maxlength="14">
+                            </div>
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="referral-row">
+                            <div class="form-group">
+                                <label for="ref3Name">Name</label>
+                                <input type="text" id="ref3Name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref3Email">Email</label>
+                                <input type="email" id="ref3Email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="ref3Phone">Phone</label>
+                                <input type="tel" id="ref3Phone" placeholder="(555) 555-5555" maxlength="14">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second referral checkbox: only visible when all 9 fields above are filled -->
+                    <div class="checkbox-group" id="referralCheck2Container" style="display: none;">
+                        <input type="checkbox" id="referralCheck2">
+                        <label for="referralCheck2"><strong>I Know Three More And Would Like To Triple My Savings</strong></label>
+                    </div>
+
+                    <!-- Second set of 3 referral rows (hidden until checkbox 2 is checked) -->
+                    <div id="referralRows2" style="display: none;">
+                        <div class="referral-section">
+                            <h4>More Referrals</h4>
+                            <!-- Row 4 -->
+                            <div class="referral-row">
+                                <div class="form-group">
+                                    <label for="ref4Name">Name</label>
+                                    <input type="text" id="ref4Name" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref4Email">Email</label>
+                                    <input type="email" id="ref4Email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref4Phone">Phone</label>
+                                    <input type="tel" id="ref4Phone" placeholder="(555) 555-5555" maxlength="14">
+                                </div>
+                            </div>
+                            <!-- Row 5 -->
+                            <div class="referral-row">
+                                <div class="form-group">
+                                    <label for="ref5Name">Name</label>
+                                    <input type="text" id="ref5Name" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref5Email">Email</label>
+                                    <input type="email" id="ref5Email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref5Phone">Phone</label>
+                                    <input type="tel" id="ref5Phone" placeholder="(555) 555-5555" maxlength="14">
+                                </div>
+                            </div>
+                            <!-- Row 6 -->
+                            <div class="referral-row">
+                                <div class="form-group">
+                                    <label for="ref6Name">Name</label>
+                                    <input type="text" id="ref6Name" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref6Email">Email</label>
+                                    <input type="email" id="ref6Email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ref6Phone">Phone</label>
+                                    <input type="tel" id="ref6Phone" placeholder="(555) 555-5555" maxlength="14">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END REFERRAL SECTION -->
+
+                <!-- Hidden timestamp field (set at submit time) -->
+                <input type="hidden" id="timestamp">
 
                 <button type="submit" class="btn">Submit &amp; Verify Eligibility</button>
             </form>
@@ -288,19 +424,27 @@
         billInput.addEventListener('input', updateSavings);
 
         // ===== PHONE AUTO-FORMAT: (###) ###-#### =====
-        const phoneInput = document.getElementById('phone');
-        phoneInput.addEventListener('input', function(e) {
-            let digits = this.value.replace(/\D/g, '');
-            if (digits.length > 10) digits = digits.substring(0, 10);
+        function formatPhone(input) {
+            input.addEventListener('input', function() {
+                let digits = this.value.replace(/\D/g, '');
+                if (digits.length > 10) digits = digits.substring(0, 10);
 
-            let formatted = '';
-            if (digits.length > 0) formatted = '(' + digits.substring(0, 3);
-            if (digits.length >= 3) formatted += ') ';
-            if (digits.length > 3) formatted += digits.substring(3, 6);
-            if (digits.length >= 6) formatted += '-';
-            if (digits.length > 6) formatted += digits.substring(6, 10);
+                let formatted = '';
+                if (digits.length > 0) formatted = '(' + digits.substring(0, 3);
+                if (digits.length >= 3) formatted += ') ';
+                if (digits.length > 3) formatted += digits.substring(3, 6);
+                if (digits.length >= 6) formatted += '-';
+                if (digits.length > 6) formatted += digits.substring(6, 10);
 
-            this.value = formatted;
+                this.value = formatted;
+            });
+        }
+
+        formatPhone(document.getElementById('phone'));
+        // Apply phone formatting to all referral phone fields
+        ['ref1Phone','ref2Phone','ref3Phone','ref4Phone','ref5Phone','ref6Phone'].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el) formatPhone(el);
         });
 
         // ===== SMART AUTHORIZED CHECKBOX: Show only when Full Name ≠ Name on Bill =====
@@ -315,10 +459,8 @@
             const nameOnBill = nameOnBillInput.value.trim().toLowerCase();
 
             if (fullName && nameOnBill && fullName !== nameOnBill) {
-                // Names don't match — show and require the checkbox
                 authorizedGroup.style.display = 'flex';
             } else {
-                // Names match or one is empty — hide and don't require
                 authorizedGroup.style.display = 'none';
                 authorizedCheckbox.checked = false;
                 authorizedError.classList.remove('visible');
@@ -328,22 +470,88 @@
         fullNameInput.addEventListener('input', checkNameMatch);
         nameOnBillInput.addEventListener('input', checkNameMatch);
 
+        // ===== PROOF UPLOAD: Show when a program is selected =====
+        const programSelect = document.getElementById('eligibleProgram');
+        const proofUploadGroup = document.getElementById('proofUploadGroup');
+        const proofUpload = document.getElementById('proofUpload');
+
+        programSelect.addEventListener('change', function() {
+            this.classList.remove('field-error');
+            document.getElementById('program-error').classList.remove('visible');
+
+            if (this.value) {
+                proofUploadGroup.style.display = 'block';
+            } else {
+                proofUploadGroup.style.display = 'none';
+                proofUpload.value = '';
+                proofUpload.classList.remove('field-error');
+                document.getElementById('proofUpload-error').classList.remove('visible');
+            }
+        });
+
+        proofUpload.addEventListener('change', function() {
+            this.classList.remove('field-error');
+            document.getElementById('proofUpload-error').classList.remove('visible');
+        });
+
+        // ===== REFERRAL SYSTEM =====
+        const referralCheck1 = document.getElementById('referralCheck1');
+        const referralRows1 = document.getElementById('referralRows1');
+        const referralCheck2Container = document.getElementById('referralCheck2Container');
+        const referralCheck2 = document.getElementById('referralCheck2');
+        const referralRows2 = document.getElementById('referralRows2');
+
+        const firstSetIds = ['ref1Name','ref1Email','ref1Phone','ref2Name','ref2Email','ref2Phone','ref3Name','ref3Email','ref3Phone'];
+
+        function checkFirstSetComplete() {
+            const allFilled = firstSetIds.every(function(id) {
+                return document.getElementById(id).value.trim() !== '';
+            });
+            referralCheck2Container.style.display = allFilled ? 'flex' : 'none';
+            if (!allFilled) {
+                referralCheck2.checked = false;
+                referralRows2.style.display = 'none';
+            }
+        }
+
+        referralCheck1.addEventListener('change', function() {
+            if (this.checked) {
+                referralRows1.style.display = 'block';
+            } else {
+                referralRows1.style.display = 'none';
+                referralCheck2.checked = false;
+                referralCheck2Container.style.display = 'none';
+                referralRows2.style.display = 'none';
+                firstSetIds.forEach(function(id) {
+                    document.getElementById(id).value = '';
+                });
+                ['ref4Name','ref4Email','ref4Phone','ref5Name','ref5Email','ref5Phone','ref6Name','ref6Email','ref6Phone'].forEach(function(id) {
+                    document.getElementById(id).value = '';
+                });
+            }
+        });
+
+        referralCheck2.addEventListener('change', function() {
+            referralRows2.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Watch first-set fields to gate the second checkbox
+        firstSetIds.forEach(function(id) {
+            document.getElementById(id).addEventListener('input', checkFirstSetComplete);
+        });
+
         // ===== CLEAR ERROR ON INTERACTION =====
-        function clearError(inputEl, errorEl) {
+        function clearError(inputEl, errorId) {
             inputEl.addEventListener('input', function() {
                 this.classList.remove('field-error');
-                document.getElementById(errorEl).classList.remove('visible');
+                document.getElementById(errorId).classList.remove('visible');
             });
         }
         clearError(fullNameInput, 'fullName-error');
         clearError(document.getElementById('email'), 'email-error');
-        clearError(phoneInput, 'phone-error');
+        clearError(document.getElementById('phone'), 'phone-error');
         clearError(nameOnBillInput, 'nameOnBill-error');
 
-        document.getElementById('eligibleProgram').addEventListener('change', function() {
-            this.classList.remove('field-error');
-            document.getElementById('program-error').classList.remove('visible');
-        });
         document.getElementById('billUpload').addEventListener('change', function() {
             this.classList.remove('field-error');
             document.getElementById('billUpload-error').classList.remove('visible');
@@ -351,6 +559,19 @@
         authorizedCheckbox.addEventListener('change', function() {
             authorizedError.classList.remove('visible');
         });
+
+        // ===== READ FILE AS DATA URL (Promise) =====
+        function readFileAsDataURL(file) {
+            return new Promise(function(resolve) {
+                const reader = new FileReader();
+                reader.onload = function(e) { resolve(e.target.result); };
+                reader.onerror = function(err) {
+                    console.error('File read error:', err);
+                    resolve(null);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
 
         // ===== FORM VALIDATION & SUBMIT =====
         document.getElementById('wattsup-funnel').addEventListener('submit', function(e) {
@@ -364,7 +585,7 @@
                 valid = false;
             }
 
-            // Email — must be valid format
+            // Email
             const emailInput = document.getElementById('email');
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
@@ -373,7 +594,8 @@
                 valid = false;
             }
 
-            // Phone — must be exactly 10 digits
+            // Phone
+            const phoneInput = document.getElementById('phone');
             const phoneDigits = phoneInput.value.replace(/\D/g, '');
             if (phoneDigits.length !== 10) {
                 phoneInput.classList.add('field-error');
@@ -381,11 +603,17 @@
                 valid = false;
             }
 
-            // Eligible Program — must not be default "Select Program..."
-            const programSelect = document.getElementById('eligibleProgram');
+            // Eligible Program
             if (!programSelect.value) {
                 programSelect.classList.add('field-error');
                 document.getElementById('program-error').classList.add('visible');
+                valid = false;
+            }
+
+            // Proof upload — required when a program is selected
+            if (programSelect.value && (!proofUpload.files || proofUpload.files.length === 0)) {
+                proofUpload.classList.add('field-error');
+                document.getElementById('proofUpload-error').classList.add('visible');
                 valid = false;
             }
 
@@ -404,20 +632,131 @@
                 valid = false;
             }
 
-            // Authorized checkbox — only required when visible (names don't match)
+            // Authorized checkbox
             if (authorizedGroup.style.display !== 'none' && !authorizedCheckbox.checked) {
                 authorizedError.classList.add('visible');
                 valid = false;
             }
 
+            // Referral fields — validate all visible rows are filled
+            if (referralCheck1.checked) {
+                firstSetIds.forEach(function(id) {
+                    const el = document.getElementById(id);
+                    if (!el.value.trim()) {
+                        el.classList.add('field-error');
+                        valid = false;
+                    }
+                });
+                if (referralCheck2.checked) {
+                    ['ref4Name','ref4Email','ref4Phone','ref5Name','ref5Email','ref5Phone','ref6Name','ref6Email','ref6Phone'].forEach(function(id) {
+                        const el = document.getElementById(id);
+                        if (!el.value.trim()) {
+                            el.classList.add('field-error');
+                            valid = false;
+                        }
+                    });
+                }
+            }
+
             if (!valid) {
-                // Scroll to first error
                 const firstError = document.querySelector('.field-error, .error-msg.visible');
                 if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 return;
             }
 
-            alert("Application submitted successfully. Your guaranteed savings are locked in!");
+            // ===== ALL VALID — COLLECT & SUBMIT =====
+            const submitBtn = document.querySelector('.btn[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting…';
+
+            // Set timestamp
+            const now = new Date();
+            document.getElementById('timestamp').value = now.toISOString();
+
+            // Determine authorized value
+            let authorizedValue;
+            const fn = fullNameInput.value.trim().toLowerCase();
+            const nb = nameOnBillInput.value.trim().toLowerCase();
+            if (!fn || !nb || fn === nb) {
+                authorizedValue = 'N/A (same person)';
+            } else {
+                authorizedValue = authorizedCheckbox.checked ? 'Yes' : 'No';
+            }
+
+            // Spreadsheet data (no file uploads)
+            const sheetData = {
+                timestamp: now.toISOString(),
+                fullName: fullNameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                eligibleProgram: programSelect.value,
+                nameOnBill: nameOnBillInput.value.trim(),
+                authorized: authorizedValue,
+                billAmount: parseFloat(billInput.value) || 0,
+                referral1Name:  document.getElementById('ref1Name').value.trim(),
+                referral1Email: document.getElementById('ref1Email').value.trim(),
+                referral1Phone: document.getElementById('ref1Phone').value.trim(),
+                referral2Name:  document.getElementById('ref2Name').value.trim(),
+                referral2Email: document.getElementById('ref2Email').value.trim(),
+                referral2Phone: document.getElementById('ref2Phone').value.trim(),
+                referral3Name:  document.getElementById('ref3Name').value.trim(),
+                referral3Email: document.getElementById('ref3Email').value.trim(),
+                referral3Phone: document.getElementById('ref3Phone').value.trim(),
+                referral4Name:  document.getElementById('ref4Name').value.trim(),
+                referral4Email: document.getElementById('ref4Email').value.trim(),
+                referral4Phone: document.getElementById('ref4Phone').value.trim(),
+                referral5Name:  document.getElementById('ref5Name').value.trim(),
+                referral5Email: document.getElementById('ref5Email').value.trim(),
+                referral5Phone: document.getElementById('ref5Phone').value.trim(),
+                referral6Name:  document.getElementById('ref6Name').value.trim(),
+                referral6Email: document.getElementById('ref6Email').value.trim(),
+                referral6Phone: document.getElementById('ref6Phone').value.trim()
+            };
+
+            // Fire-and-forget POST to Google Sheets (no-cors — no response body available)
+            // NOTE: Replace YOUR_DEPLOYMENT_ID with your actual Google Apps Script deployment ID before going live.
+            const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(sheetData)
+            }).catch(function(err) {
+                console.error('Google Sheets submission failed:', err);
+            });
+
+            // Read file(s) for sessionStorage preview, then redirect
+            const billFile = billUpload.files[0];
+            const proofFile = proofUpload.files.length > 0 ? proofUpload.files[0] : null;
+
+            const reads = [
+                billFile ? readFileAsDataURL(billFile) : Promise.resolve(null),
+                proofFile ? readFileAsDataURL(proofFile) : Promise.resolve(null)
+            ];
+
+            Promise.all(reads).then(function(results) {
+                const billDataURL = results[0];
+                const proofDataURL = results[1];
+
+                const monthlySavings = (parseFloat(billInput.value) || 0) * 0.30;
+                const sessionData = Object.assign({}, sheetData, {
+                    submittedAt: now.toLocaleString(),
+                    savings1yr: formatter.format((monthlySavings * 12) + billCredit),
+                    // Bill file metadata + preview
+                    billFileName: billFile ? billFile.name : '',
+                    billFileType: billFile ? billFile.type : '',
+                    billFileSize: billFile ? (Math.round(billFile.size / 1024) + ' KB') : '',
+                    billFileData: billDataURL,
+                    // Proof file metadata + preview
+                    proofFileName: proofFile ? proofFile.name : '',
+                    proofFileType: proofFile ? proofFile.type : '',
+                    proofFileSize: proofFile ? (Math.round(proofFile.size / 1024) + ' KB') : '',
+                    proofFileData: proofDataURL
+                });
+
+                sessionStorage.setItem('wattsup_form', JSON.stringify(sessionData));
+                window.location.href = 'review.html';
+            });
         });
     </script>
 </body>
