@@ -683,7 +683,13 @@
                 authorizedValue = authorizedCheckbox.checked ? 'Yes' : 'No';
             }
 
-            // Spreadsheet data (no file uploads)
+            // Count filled referrals
+            let referralCount = 0;
+            ['ref1Name','ref2Name','ref3Name','ref4Name','ref5Name','ref6Name'].forEach(function(id) {
+                if (document.getElementById(id).value.trim()) referralCount++;
+            });
+
+            // Spreadsheet data (no file uploads — Google Sheets POST happens on review page)
             const sheetData = {
                 timestamp: now.toISOString(),
                 fullName: fullNameInput.value.trim(),
@@ -693,6 +699,7 @@
                 nameOnBill: nameOnBillInput.value.trim(),
                 authorized: authorizedValue,
                 billAmount: parseFloat(billInput.value) || 0,
+                referralCount: referralCount,
                 referral1Name:  document.getElementById('ref1Name').value.trim(),
                 referral1Email: document.getElementById('ref1Email').value.trim(),
                 referral1Phone: document.getElementById('ref1Phone').value.trim(),
@@ -712,18 +719,6 @@
                 referral6Email: document.getElementById('ref6Email').value.trim(),
                 referral6Phone: document.getElementById('ref6Phone').value.trim()
             };
-
-            // Fire-and-forget POST to Google Sheets (no-cors — no response body available)
-            // NOTE: Replace YOUR_DEPLOYMENT_ID with your actual Google Apps Script deployment ID before going live.
-            const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(sheetData)
-            }).catch(function(err) {
-                console.error('Google Sheets submission failed:', err);
-            });
 
             // Read file(s) for sessionStorage preview, then redirect
             const billFile = billUpload.files[0];

@@ -77,19 +77,34 @@
         .file-meta-item { background: #f0f4f8; padding: 8px 14px; border-radius: 6px; font-size: 13px; }
         .file-meta-item strong { color: var(--primary); }
 
+        /* Savings breakdown card */
+        .savings-table { width: 100%; border-collapse: collapse; }
+        .savings-table tr { border-bottom: 1px solid #eee; }
+        .savings-table tr:last-child { border-bottom: none; }
+        .savings-table td { padding: 12px 8px; font-size: 15px; }
+        .savings-table td:first-child { color: #555; font-size: 14px; }
+        .savings-table td:last-child { text-align: right; font-weight: 600; }
+        .savings-savings { color: var(--success) !important; }
+        .savings-total { font-size: 17px !important; font-weight: 700 !important; color: var(--primary) !important; border-top: 2px solid var(--primary) !important; }
+        .savings-first { background: #d4edda; }
+        .savings-first td { color: #155724 !important; font-weight: 700 !important; }
+        .referral-credit-note { font-size: 13px; color: #888; font-style: italic; margin-left: 8px; font-weight: 400; }
+
+        /* Referrals display table */
+        .referral-display-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .referral-display-table th { background: var(--primary); color: white; padding: 10px 12px; font-size: 13px; text-align: left; }
+        .referral-display-table td { padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+        .referral-display-table tr:last-child td { border-bottom: none; }
+        .referral-display-table tr:nth-child(even) td { background: #f9f9f9; }
+
         /* Buttons */
         .btn-row { display: flex; gap: 15px; margin-top: 10px; }
         .btn { flex: 1; display: block; text-align: center; padding: 16px; border: none; border-radius: 6px; font-size: 17px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-transform: uppercase; }
-        .btn-primary { background: var(--success); color: white; }
-        .btn-primary:hover { background: #218838; transform: translateY(-2px); }
+        .btn-primary { background: var(--secondary); color: var(--dark); }
+        .btn-primary:hover { background: #e5a619; transform: translateY(-2px); }
         .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
         .btn-secondary:hover { background: var(--primary); color: white; transform: translateY(-2px); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-        .success-banner { display: none; background: linear-gradient(135deg, var(--success), #1e7e34); color: white; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 25px; }
-        .success-banner h2 { margin: 0 0 10px 0; font-size: 26px; }
-        .success-banner p { margin: 0; font-size: 16px; opacity: 0.9; }
-        .success-banner .checkmark { font-size: 48px; display: block; margin-bottom: 10px; }
 
         footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; margin-top: 30px; }
 
@@ -112,15 +127,7 @@
         <p>Please verify all information below before finalizing your submission.</p>
     </div>
 
-    <!-- Success banner — shown after finalize -->
-    <div class="container">
-        <div class="success-banner" id="successBanner">
-            <span class="checkmark">✅</span>
-            <h2>Application Submitted!</h2>
-            <p>A confirmation email has been sent. Our team will contact you within 1–2 business days.</p>
-        </div>
-    </div>
-
+    <!-- Success banner no longer needed — redirect goes to final.html -->
     <div class="container" id="reviewContent">
         <!-- Applicant Info Card -->
         <div class="card">
@@ -134,8 +141,52 @@
                     <tr><td>Eligible Program</td><td id="r-program">—</td></tr>
                     <tr><td>Name on Bill</td><td id="r-nameOnBill">—</td></tr>
                     <tr><td>Authorization</td><td id="r-authorized">—</td></tr>
-                    <tr><td>Estimated Bill</td><td id="r-billAmount">—</td></tr>
-                    <tr><td>Projected 1-Year Savings</td><td id="r-savings">—</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Savings Breakdown Card -->
+        <div class="card" id="savingsCard">
+            <div class="card-header" style="background: #1a7a3a;">💰 Your Savings Breakdown</div>
+            <div class="card-body">
+                <table class="savings-table">
+                    <tr>
+                        <td>Your Monthly Bill</td>
+                        <td id="s-bill">—</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Savings (30% discount)</td>
+                        <td class="savings-savings" id="s-monthly">—</td>
+                    </tr>
+                    <tr>
+                        <td>Referral Credit <span class="referral-credit-note" id="s-referral-note"></span></td>
+                        <td class="savings-savings" id="s-referral">—</td>
+                    </tr>
+                    <tr class="savings-total">
+                        <td>Subtotal (New Monthly Bill)</td>
+                        <td id="s-subtotal">—</td>
+                    </tr>
+                    <tr class="savings-first">
+                        <td>First Month with Credit</td>
+                        <td id="s-firstmonth">—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Projected 1-Year Savings</strong></td>
+                        <td class="savings-savings" id="s-1yr"><strong>—</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Referrals Card (shown only if they referred anyone) -->
+        <div class="card" id="referralsCard" style="display: none;">
+            <div class="card-header">👥 Your Referrals</div>
+            <div class="card-body">
+                <table class="referral-display-table">
+                    <thead>
+                        <tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th></tr>
+                    </thead>
+                    <tbody id="referralTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -146,6 +197,15 @@
             <div class="card-body">
                 <div class="file-meta" id="fileMeta"></div>
                 <div class="bill-preview" id="billPreview"></div>
+            </div>
+        </div>
+
+        <!-- Proof of Program Upload Card (shown only if proof was uploaded) -->
+        <div class="card" id="proofCard" style="display: none;">
+            <div class="card-header" style="background: #5a4a8a;">📎 Proof of Program</div>
+            <div class="card-body">
+                <div class="file-meta" id="proofFileMeta"></div>
+                <div class="bill-preview" id="proofPreview"></div>
             </div>
         </div>
 
@@ -184,7 +244,7 @@
         <!-- Action Buttons -->
         <div class="btn-row" id="actionButtons">
             <a href="index.html" class="btn btn-secondary">← Edit Application</a>
-            <button class="btn btn-primary" id="finalizeBtn" onclick="finalize()">✅ Confirm & Finalize</button>
+            <button class="btn btn-primary" id="finalizeBtn" onclick="finalize()">✅ Sign Up For Xcel Savings!</button>
         </div>
     </div>
 
@@ -193,12 +253,24 @@
     </footer>
 
     <script>
+        // ===== APPS SCRIPT URL — replace with your deployed web app URL =====
+        // To get this: Google Apps Script → Deploy → New deployment → Web app → Copy URL
+        const APPS_SCRIPT_URL = 'PASTE_YOUR_DEPLOYMENT_URL_HERE';
+
         // ===== LOAD DATA FROM SESSIONSTORAGE =====
         const raw = sessionStorage.getItem('wattsup_form');
         if (!raw) {
             document.getElementById('reviewContent').innerHTML = '<div class="card"><div class="card-body" style="text-align:center; padding:60px 20px;"><h2 style="color:var(--primary);">No Application Found</h2><p style="color:#666;">Please fill out the form first.</p><a href="index.html" class="btn btn-secondary" style="max-width:300px; margin:20px auto;">← Go to Application</a></div></div>';
         }
         const data = raw ? JSON.parse(raw) : {};
+
+        // ===== HTML ESCAPE HELPER =====
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = String(str);
+            return div.innerHTML;
+        }
 
         // ===== POPULATE APPLICANT INFO =====
         if (raw) {
@@ -207,24 +279,82 @@
             document.getElementById('r-email').textContent = data.email || '—';
             document.getElementById('r-phone').textContent = data.phone || '—';
             document.getElementById('r-nameOnBill').textContent = data.nameOnBill || '—';
-            document.getElementById('r-billAmount').textContent = data.billAmount ? ('$' + data.billAmount) : '—';
-            document.getElementById('r-savings').innerHTML = data.savings1yr ? ('<strong style="color:var(--success);">' + data.savings1yr + '</strong>') : '—';
 
             // Program badge
             const prog = data.eligibleProgram || '—';
-            document.getElementById('r-program').innerHTML = '<span class="badge badge-info">' + prog + '</span>';
+            document.getElementById('r-program').innerHTML = '<span class="badge badge-info">' + escapeHtml(prog) + '</span>';
 
             // Authorization
             const auth = data.authorized || '—';
-            if (auth === 'Same person (N/A)') {
+            if (auth === 'N/A (same person)') {
                 document.getElementById('r-authorized').innerHTML = '<span class="badge badge-success">Same person — no authorization needed</span>';
             } else if (auth === 'Yes') {
                 document.getElementById('r-authorized').innerHTML = '<span class="badge badge-success">Authorized ✓</span>';
             } else {
-                document.getElementById('r-authorized').innerHTML = '<span class="badge badge-warning">' + auth + '</span>';
+                document.getElementById('r-authorized').innerHTML = '<span class="badge badge-warning">' + escapeHtml(auth) + '</span>';
             }
 
-            // ===== FILE METADATA =====
+            // ===== SAVINGS BREAKDOWN =====
+            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+            const billAmt = parseFloat(data.billAmount) || 0;
+            const referralCount = parseInt(data.referralCount) || 0;
+            const REFERRAL_MAX = 275;
+            const PER_REFERRAL = REFERRAL_MAX / 3;
+
+            let referralCredit = 0;
+            let referralNote = '';
+            if (referralCount >= 3) {
+                referralCredit = REFERRAL_MAX;
+                referralNote = '';
+            } else if (referralCount === 2) {
+                referralCredit = Math.round(PER_REFERRAL * 2 * 100) / 100;
+                referralNote = 'Refer 1 more friend for full $275!';
+            } else if (referralCount === 1) {
+                referralCredit = Math.round(PER_REFERRAL * 100) / 100;
+                referralNote = 'Refer 2 more friends for full $275!';
+            } else {
+                referralCredit = 0;
+                referralNote = 'Refer 3 friends for full $275!';
+            }
+
+            const monthlySavings = billAmt * 0.30;
+            const subtotal = billAmt - monthlySavings;
+            const firstMonth = subtotal - referralCredit;
+            const savings1yr = monthlySavings * 12;
+
+            document.getElementById('s-bill').textContent = formatter.format(billAmt);
+            document.getElementById('s-monthly').textContent = '-' + formatter.format(monthlySavings);
+            document.getElementById('s-referral').textContent = referralCredit > 0 ? ('-' + formatter.format(referralCredit)) : formatter.format(0);
+            document.getElementById('s-referral-note').textContent = referralNote;
+            document.getElementById('s-subtotal').textContent = formatter.format(subtotal);
+            document.getElementById('s-firstmonth').textContent = formatter.format(firstMonth);
+            document.getElementById('s-1yr').innerHTML = '<strong>' + formatter.format(savings1yr) + '</strong>';
+
+            // ===== REFERRALS CARD =====
+            const referrals = [];
+            for (var r = 1; r <= 6; r++) {
+                const name = data['referral' + r + 'Name'];
+                const email = data['referral' + r + 'Email'];
+                const phone = data['referral' + r + 'Phone'];
+                if (name || email || phone) {
+                    referrals.push({ num: r, name: name, email: email, phone: phone });
+                }
+            }
+            if (referrals.length > 0) {
+                document.getElementById('referralsCard').style.display = 'block';
+                var refHtml = '';
+                referrals.forEach(function(ref) {
+                    refHtml += '<tr>';
+                    refHtml += '<td>' + ref.num + '</td>';
+                    refHtml += '<td>' + escapeHtml(ref.name || '—') + '</td>';
+                    refHtml += '<td>' + escapeHtml(ref.email || '—') + '</td>';
+                    refHtml += '<td>' + escapeHtml(ref.phone || '—') + '</td>';
+                    refHtml += '</tr>';
+                });
+                document.getElementById('referralTableBody').innerHTML = refHtml;
+            }
+
+            // ===== FILE METADATA (Bill) =====
             const metaContainer = document.getElementById('fileMeta');
             if (data.billFileName) {
                 metaContainer.innerHTML =
@@ -246,13 +376,24 @@
                 // Run OCR on image
                 runOCR(data.billFileData);
             }
-        }
 
-        // ===== HTML ESCAPE HELPER =====
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
+            // ===== PROOF OF PROGRAM CARD =====
+            if (data.proofFileName) {
+                document.getElementById('proofCard').style.display = 'block';
+                var proofMeta = document.getElementById('proofFileMeta');
+                proofMeta.innerHTML =
+                    '<div class="file-meta-item"><strong>Filename:</strong> ' + escapeHtml(data.proofFileName) + '</div>' +
+                    '<div class="file-meta-item"><strong>Type:</strong> ' + escapeHtml(data.proofFileType) + '</div>' +
+                    '<div class="file-meta-item"><strong>Size:</strong> ' + escapeHtml(data.proofFileSize) + '</div>';
+
+                var proofPreview = document.getElementById('proofPreview');
+                var isProofPdf = data.proofFileType && data.proofFileType.includes('pdf');
+                if (isProofPdf) {
+                    proofPreview.innerHTML = '<div class="pdf-notice"><span class="icon">📎</span><strong>' + escapeHtml(data.proofFileName) + '</strong><br>PDF file uploaded</div>';
+                } else if (data.proofFileData) {
+                    proofPreview.innerHTML = '<img src="' + data.proofFileData + '" alt="Proof of program">';
+                }
+            }
         }
 
         // ===== OCR EXTRACTION =====
@@ -422,38 +563,55 @@
             }
         }
 
-        // ===== FINALIZE =====
+        // ===== FINALIZE: POST TO GOOGLE SHEETS + REDIRECT TO FINAL.HTML =====
         function finalize() {
             var btn = document.getElementById('finalizeBtn');
             btn.disabled = true;
-            btn.textContent = 'Finalizing...';
+            btn.textContent = 'Submitting…';
 
-            // Collect editable OCR field values
-            var ocrData = {};
-            var inputs = document.querySelectorAll('[data-ocr-label]');
-            for (var i = 0; i < inputs.length; i++) {
-                ocrData[inputs[i].getAttribute('data-ocr-label')] = inputs[i].value;
-            }
-
-            // Build full payload
+            // Build flat payload matching spreadsheet columns (no file DataURLs)
             var payload = {
-                applicant: data,
-                extractedBillData: ocrData,
-                ocrRawText: window._ocrRawText || 'N/A (PDF or scan unavailable)',
-                ocrConfidence: window._ocrConfidence || 'N/A',
-                finalizedAt: new Date().toISOString()
+                timestamp: data.timestamp,
+                fullName: data.fullName,
+                email: data.email,
+                phone: data.phone,
+                eligibleProgram: data.eligibleProgram,
+                nameOnBill: data.nameOnBill,
+                authorized: data.authorized,
+                billAmount: data.billAmount,
+                referralCount: data.referralCount,
+                referral1Name:  data.referral1Name,
+                referral1Email: data.referral1Email,
+                referral1Phone: data.referral1Phone,
+                referral2Name:  data.referral2Name,
+                referral2Email: data.referral2Email,
+                referral2Phone: data.referral2Phone,
+                referral3Name:  data.referral3Name,
+                referral3Email: data.referral3Email,
+                referral3Phone: data.referral3Phone,
+                referral4Name:  data.referral4Name,
+                referral4Email: data.referral4Email,
+                referral4Phone: data.referral4Phone,
+                referral5Name:  data.referral5Name,
+                referral5Email: data.referral5Email,
+                referral5Phone: data.referral5Phone,
+                referral6Name:  data.referral6Name,
+                referral6Email: data.referral6Email,
+                referral6Phone: data.referral6Phone
             };
 
-            console.log('=== FINALIZED APPLICATION ===');
-            console.log(JSON.stringify(payload, null, 2));
-
-            // Show success
-            document.getElementById('successBanner').style.display = 'block';
-            document.getElementById('actionButtons').style.display = 'none';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // Clean up
-            sessionStorage.removeItem('wattsup_form');
+            // POST to Google Sheets (fire-and-forget, no-cors)
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(function(err) {
+                console.error('Google Sheets submission error:', err);
+            }).finally(function() {
+                // Redirect to confirmation page regardless of fetch outcome (no-cors gives opaque response)
+                window.location.href = 'final.html';
+            });
         }
     </script>
 </body>
