@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WattsUp NM | You're All Set!</title>
+    <style>
+        :root {
+            --primary: #004b87;
+            --secondary: #ffb81c;
+            --success: #28a745;
+            --dark: #222222;
+            --light: #f4f7f6;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 0; color: var(--dark); background-color: var(--light); }
+
+        header { background: white; padding: 15px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        header img { max-height: 80px; width: auto; }
+
+        .hero { background: linear-gradient(135deg, var(--success), #1a7a3a); color: white; padding: 60px 20px; text-align: center; }
+        .hero .checkmark { font-size: 72px; display: block; margin-bottom: 10px; }
+        .hero h1 { font-size: 40px; margin: 0 0 10px 0; font-weight: 700; }
+        .hero p { font-size: 18px; margin: 0; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        .container { max-width: 700px; margin: 40px auto 50px auto; padding: 0 20px; }
+
+        .card { background: white; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); margin-bottom: 25px; overflow: hidden; }
+        .card-header { background: var(--primary); color: white; padding: 15px 25px; font-size: 18px; font-weight: 700; }
+        .card-body { padding: 30px 25px; }
+
+        .card-body p { font-size: 16px; line-height: 1.7; margin: 0 0 12px 0; color: #444; }
+        .card-body p:last-child { margin-bottom: 0; }
+
+        .credit-highlight { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 14px 20px; margin-top: 16px; font-size: 16px; color: #155724; font-weight: 600; text-align: center; }
+        .credit-highlight .credit-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+
+        .btn-row { display: flex; justify-content: center; margin-top: 10px; }
+        .btn { display: inline-block; text-align: center; padding: 16px 36px; border: none; border-radius: 6px; font-size: 17px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-transform: uppercase; }
+        .btn-home { background: var(--secondary); color: var(--dark); }
+        .btn-home:hover { background: #e5a619; transform: translateY(-2px); }
+
+        footer { background: var(--dark); color: #aaa; text-align: center; padding: 25px; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 28px; }
+            .hero .checkmark { font-size: 56px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.svg" alt="WattsUp New Mexico">
+    </header>
+
+    <div class="hero">
+        <span class="checkmark">✅</span>
+        <h1>You're All Set!</h1>
+        <p>Your application has been submitted successfully to WattsUp New Mexico.</p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">🎉 What Happens Next</div>
+            <div class="card-body">
+                <p>✔️ Your application has been submitted successfully.</p>
+                <p>✔️ A confirmation email will be sent to your email address.</p>
+                <p>✔️ Our team will contact you within <strong>1–2 business days</strong> to finalize your enrollment.</p>
+                <div id="referralCreditNote" style="display: none;">
+                    <div class="credit-highlight">
+                        <span class="credit-icon">💰</span>
+                        <span id="referralCreditText">Your referral credit has been noted!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <a href="index.html" class="btn btn-home">← Back to Home</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 WattsUp NM — Roswell Area. All rights reserved. | An independent enrollment partner.</p>
+    </footer>
+
+    <script>
+        // Read referral credit info from sessionStorage before clearing it
+        var raw = sessionStorage.getItem('wattsup_form');
+        if (raw) {
+            try {
+                var data = JSON.parse(raw);
+                var referralCount = parseInt(data.referralCount) || 0;
+                var REFERRAL_MAX = 275;
+                var PER_REFERRAL = REFERRAL_MAX / 3;
+
+                var referralCredit = 0;
+                if (referralCount >= 3) {
+                    referralCredit = REFERRAL_MAX;
+                } else if (referralCount === 2) {
+                    referralCredit = Math.round(PER_REFERRAL * 2 * 100) / 100;
+                } else if (referralCount === 1) {
+                    referralCredit = Math.round(PER_REFERRAL * 100) / 100;
+                }
+
+                if (referralCredit > 0) {
+                    var formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+                    document.getElementById('referralCreditNote').style.display = 'block';
+                    document.getElementById('referralCreditText').textContent =
+                        'Your referral credit of ' + formatter.format(referralCredit) + ' has been noted!';
+                }
+            } catch (e) {
+                console.error('Error reading session data:', e);
+            }
+
+            // Clear sessionStorage
+            sessionStorage.removeItem('wattsup_form');
+        }
+    </script>
+</body>
+</html>
