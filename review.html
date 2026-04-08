@@ -253,8 +253,9 @@
     </footer>
 
     <script>
-        // ===== APPS SCRIPT URL — replace with your deployed web app URL =====
+        // ===== APPS SCRIPT URL — REQUIRED: replace with your deployed web app URL =====
         // To get this: Google Apps Script → Deploy → New deployment → Web app → Copy URL
+        // Example format: 'https://script.google.com/macros/s/AKfycbx.../exec'
         const APPS_SCRIPT_URL = 'PASTE_YOUR_DEPLOYMENT_URL_HERE';
 
         // ===== LOAD DATA FROM SESSIONSTORAGE =====
@@ -332,7 +333,7 @@
 
             // ===== REFERRALS CARD =====
             const referrals = [];
-            for (var r = 1; r <= 6; r++) {
+            for (let r = 1; r <= 6; r++) {
                 const name = data['referral' + r + 'Name'];
                 const email = data['referral' + r + 'Email'];
                 const phone = data['referral' + r + 'Phone'];
@@ -342,7 +343,7 @@
             }
             if (referrals.length > 0) {
                 document.getElementById('referralsCard').style.display = 'block';
-                var refHtml = '';
+                let refHtml = '';
                 referrals.forEach(function(ref) {
                     refHtml += '<tr>';
                     refHtml += '<td>' + ref.num + '</td>';
@@ -565,6 +566,12 @@
 
         // ===== FINALIZE: POST TO GOOGLE SHEETS + REDIRECT TO FINAL.HTML =====
         function finalize() {
+            // Guard: ensure the Apps Script URL has been configured
+            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'PASTE_YOUR_DEPLOYMENT_URL_HERE') {
+                alert('Configuration required: Please replace PASTE_YOUR_DEPLOYMENT_URL_HERE in review.html with your Google Apps Script deployment URL before going live.');
+                return;
+            }
+
             var btn = document.getElementById('finalizeBtn');
             btn.disabled = true;
             btn.textContent = 'Submitting…';
